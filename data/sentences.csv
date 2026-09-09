@@ -4,4 +4,4 @@ General;Time flies like an arrow;NOUN VERB ADP DET NOUN
 General;The spy saw the cop with the telescope;DET NOUN VERB DET NOUN ADP DET NOUN
 General;The spy saw the cop with the revolver;DET NOUN VERB DET NOUN ADP DET NOUN
 Medical;Arabidopsis thaliana seedlings exhibit longer hypocotyls when they are grown under high ambient temperature which is defined as thermomorphogenesis; PROPN PROPN NOUN VERB ADJ NOUN SCONJ PRON AUX VERB ADP ADJ ADJ NOUN PRON AUX VERB ADP NOUN
-Astronomy;A spectrogram of PSN J10354824+3900279 obtained on Dec. 19.33 UT suggests that this is a type-Ia at redshift z 0.044;DET NOUN ADP NOUN NOUN VERB ADP NOUN ADP DET VERB DET NOUN ADP NOUN
+Astronomy;A spectrogram of PSN J10354824 + 3900279 obtained on Dec. 19.33 UT suggests that this is a type Ia at redshift z 0.044;DET NOUN ADP PROPN PROPN PUNCT NUM VERB ADP PROPN NUM PROPN VERB SCONJ PRON AUX DET NOUN PROPN ADP NOUN NOUN NUM
