@@ -1,6 +1,6 @@
 Domain;Sentence;Pos
-General;The cat sat on the couch;DET NOUN VERB PREP DET NOUN
-General;Time flies like an arrow;NOUN VERB ADP DET NOUN
+General;The cat sat on the couch;DET NOUN VERB ADP DET NOUN
+General;Time flies like an arrow;NOUN NOUN ADP DET NOUN
 General;The spy saw the cop with the telescope;DET NOUN VERB DET NOUN ADP DET NOUN
 General;The spy saw the cop with the revolver;DET NOUN VERB DET NOUN ADP DET NOUN
 Medical; Arabidopsis thaliana seedlings exhibit longer hypocotyls when they are grown under high ambient temperature, which is defined as thermomorphogenesis;NOUN NOUN NOUN VERB ADJ NOUN ADP PRON VERB VERB ADP ADJ NOUN
