@@ -1,8 +1,0 @@
-Sentence,Tokens,Accuracy,F1_macro,Precision_macro,Errors
-The cat sat on the couch,6,1.0,1.0,1.0,none
-Time flies like an arrow,5,1.0,1.0,1.0,none
-The spy saw the cop with the telescope,8,1.0,1.0,1.0,none
-The spy saw the cop with the revolver,8,1.0,1.0,1.0,none
-Arabidopsis thaliana seedlings exhibit longer hypocotyls when they are grown under high ambient temperature which is defined as thermomorphogenesis,19,0.7894736842105263,0.7037037037037037,0.6962962962962963,"PROPN -> NOUN (2), ADJ -> ADV (1), NOUN -> ADJ (1)"
-A spectrogram of PSN J10354824 + 3900279 obtained on Dec. 19.33 UT suggests that this is a type Ia at redshift z 0.044,23,0.9565217391304348,0.8181818181818182,0.8181818181818182,PUNCT -> SYM (1)
-OVERALL,69,0.927536231884058,0.7245322245322245,0.7354925775978407,"PROPN -> NOUN (2), ADJ -> ADV (1), NOUN -> ADJ (1), PUNCT -> SYM (1)"
