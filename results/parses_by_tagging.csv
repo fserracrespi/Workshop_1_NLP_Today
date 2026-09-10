@@ -1,0 +1,7 @@
+Sentence,grammar,n_parses_gold,n_parses_web_sm,n_parses_sci_sm
+The cat sat on the couch,G_CORE,1.0,1.0,1.0
+Time flies like an arrow,G_CORE,1.0,1.0,0.0
+The spy saw the cop with the telescope,G_CORE,2.0,2.0,2.0
+The spy saw the cop with the revolver,G_CORE,2.0,2.0,2.0
+Arabidopsis thaliana seedlings exhibit longer hypocotyls when they are grown under high ambient temperature which is defined as thermomorphogenesis,G_SPEC,,,
+A spectrogram of PSN J10354824 + 3900279 obtained on Dec. 19.33 UT suggests that this is a type Ia at redshift z 0.044,G_SPEC,,,
