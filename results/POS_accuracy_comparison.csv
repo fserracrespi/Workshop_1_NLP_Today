@@ -1,8 +1,8 @@
 Sentence,Domain,web_sm,sci_sm
-The cat sat on the couch,General,1.0,1.0
-Time flies like an arrow,General,1.0,0.8
-The spy saw the cop with the telescope,General,1.0,1.0
-The spy saw the cop with the revolver,General,1.0,1.0
-Arabidopsis thaliana seedlings exhibit longer hypocotyls when they are grown under high ambient temperature which is defined as thermomorphogenesis,Specialty,0.7894736842105263,0.7368421052631579
-A spectrogram of PSN J10354824 + 3900279 obtained on Dec. 19.33 UT suggests that this is a type Ia at redshift z 0.044,Specialty,0.9565217391304348,0.782608695652174
-OVERALL,-,0.927536231884058,0.8405797101449275
+The cat sat on the couch.,General,1.0,1.0
+Time flies like an arrow.,General,1.0,0.8333333333333334
+The spy saw the cop with the telescope.,General,1.0,1.0
+The spy saw the cop with the revolver.,General,1.0,1.0
+"Arabidopsis thaliana seedlings exhibit longer hypocotyls when they are grown under high ambient temperature, which is defined as thermomorphogenesis.",Specialty,0.8095238095238095,0.7619047619047619
+A spectrogram of PSN J10354824+3900279 obtained on Dec. 19.33 UT suggests that this is a type-Ia at redshift z 0.044.,Specialty,0.92,
+OVERALL,-,0.922077922077922,0.8846153846153846
