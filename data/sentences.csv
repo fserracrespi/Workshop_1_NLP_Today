@@ -1,7 +1,7 @@
-Domain;Sentence;Pos
-General;The cat sat on the couch;DET NOUN VERB ADP DET NOUN
-General;Time flies like an arrow;NOUN VERB ADP DET NOUN
-General;The spy saw the cop with the telescope;DET NOUN VERB DET NOUN ADP DET NOUN
-General;The spy saw the cop with the revolver;DET NOUN VERB DET NOUN ADP DET NOUN
-Specialty;Arabidopsis thaliana seedlings exhibit longer hypocotyls when they are grown under high ambient temperature which is defined as thermomorphogenesis;PROPN PROPN NOUN VERB ADJ NOUN SCONJ PRON AUX VERB ADP ADJ ADJ NOUN PRON AUX VERB ADP NOUN
-Specialty;A spectrogram of PSN J10354824 + 3900279 obtained on Dec. 19.33 UT suggests that this is a type Ia at redshift z 0.044;DET NOUN ADP PROPN PROPN PUNCT NUM VERB ADP PROPN NUM PROPN VERB SCONJ PRON AUX DET NOUN PROPN ADP NOUN NOUN NUM
+Domain;Sentence;Tokens;Pos
+General;The cat sat on the couch.;The cat sat on the couch .;DET NOUN VERB ADP DET NOUN PUNCT
+General;Time flies like an arrow.;Time flies like an arrow .;NOUN VERB ADP DET NOUN PUNCT
+General;The spy saw the cop with the telescope.;The spy saw the cop with the telescope .;DET NOUN VERB DET NOUN ADP DET NOUN PUNCT
+General;The spy saw the cop with the revolver.;The spy saw the cop with the revolver .;DET NOUN VERB DET NOUN ADP DET NOUN PUNCT
+Specialty;Arabidopsis thaliana seedlings exhibit longer hypocotyls when they are grown under high ambient temperature, which is defined as thermomorphogenesis.;Arabidopsis thaliana seedlings exhibit longer hypocotyls when they are grown under high ambient temperature , which is defined as thermomorphogenesis .;PROPN PROPN NOUN VERB ADJ NOUN SCONJ PRON AUX VERB ADP ADJ ADJ NOUN PUNCT PRON AUX VERB ADP NOUN PUNCT
+Specialty;A spectrogram of PSN J10354824+3900279 obtained on Dec. 19.33 UT suggests that this is a type-Ia at redshift z 0.044.;A spectrogram of PSN J10354824 + 3900279 obtained on Dec. 19.33 UT suggests that this is a type - Ia at redshift z 0.044 .;DET NOUN ADP PROPN PROPN SYM NUM VERB ADP PROPN NUM PROPN VERB SCONJ PRON AUX DET NOUN PUNCT PROPN ADP NOUN NOUN NUM PUNCT
