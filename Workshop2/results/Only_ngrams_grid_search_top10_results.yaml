@@ -1,0 +1,307 @@
+Logistic Regression:
+- rank: 1
+  params:
+    classifier__C: 10
+    classifier__penalty: l2
+    classifier__solver: lbfgs
+  stable_score: 0.31396177312477924
+  Avg_train_score: 0.8863136512925335
+  Std_train_score: 0.0033255954190658265
+  Avg_test_score: 0.5218344728327494
+  Std_test_score: 0.025633110478078147
+- rank: 2
+  params:
+    classifier__C: 10
+    classifier__penalty: l2
+    classifier__solver: saga
+  stable_score: 0.3127815152287093
+  Avg_train_score: 0.8852464020099206
+  Std_train_score: 0.004568105090753005
+  Avg_test_score: 0.5203783236471071
+  Std_test_score: 0.025162769236991137
+- rank: 3
+  params:
+    classifier__C: 5
+    classifier__penalty: l2
+    classifier__solver: saga
+  stable_score: 0.30890305030119136
+  Avg_train_score: 0.7686638903505053
+  Std_train_score: 0.013115910871134983
+  Avg_test_score: 0.478368707716564
+  Std_test_score: 0.024318066098401907
+- rank: 4
+  params:
+    classifier__C: 5
+    classifier__penalty: l2
+    classifier__solver: lbfgs
+  stable_score: 0.3071318490415505
+  Avg_train_score: 0.7669976803610441
+  Std_train_score: 0.013692849956512137
+  Avg_test_score: 0.4767375595736752
+  Std_test_score: 0.02447565013844027
+- rank: 5
+  params:
+    classifier__C: 2
+    classifier__penalty: l2
+    classifier__solver: saga
+  stable_score: 0.24297666584723437
+  Avg_train_score: 0.5229443684383038
+  Std_train_score: 0.009435661995657386
+  Avg_test_score: 0.3451070298876865
+  Std_test_score: 0.013211694765143433
+- rank: 6
+  params:
+    classifier__C: 2
+    classifier__penalty: l2
+    classifier__solver: lbfgs
+  stable_score: 0.2424894070473192
+  Avg_train_score: 0.5243601971088141
+  Std_train_score: 0.006390096390014323
+  Avg_test_score: 0.3479064743994088
+  Std_test_score: 0.01719020599738697
+- rank: 7
+  params:
+    classifier__C: 1
+    classifier__penalty: l2
+    classifier__solver: lbfgs
+  stable_score: 0.1716245288476368
+  Avg_train_score: 0.29528493835907466
+  Std_train_score: 0.008016688020092309
+  Avg_test_score: 0.22240828834146326
+  Std_test_score: 0.014345434485020764
+- rank: 8
+  params:
+    classifier__C: 1
+    classifier__penalty: l2
+    classifier__solver: saga
+  stable_score: 0.16543980354146365
+  Avg_train_score: 0.2947724387506212
+  Std_train_score: 0.006499573233778374
+  Avg_test_score: 0.22010583277720414
+  Std_test_score: 0.017332726249031948
+- rank: 9
+  params:
+    classifier__C: 0.5
+    classifier__penalty: l2
+    classifier__solver: lbfgs
+  stable_score: 0.10788345229836269
+  Avg_train_score: 0.1456648407669981
+  Std_train_score: 0.0017139976942848593
+  Avg_test_score: 0.12373950424082972
+  Std_test_score: 0.004893383679382843
+- rank: 10
+  params:
+    classifier__C: 0.5
+    classifier__penalty: l2
+    classifier__solver: saga
+  stable_score: 0.10783975566780371
+  Avg_train_score: 0.14562599195689047
+  Std_train_score: 0.0017011327483979154
+  Avg_test_score: 0.12398834032039925
+  Std_test_score: 0.005329758834349944
+SVC:
+- rank: 1
+  params:
+    classifier__C: 5
+    classifier__kernel: linear
+  stable_score: 0.49754789854727766
+  Avg_train_score: 0.921902171112883
+  Std_train_score: 0.007573933168067849
+  Avg_test_score: 0.6542735533318634
+  Std_test_score: 0.02291134589407594
+- rank: 2
+  params:
+    classifier__C: 2
+    classifier__kernel: linear
+  stable_score: 0.4931792216338277
+  Avg_train_score: 0.8140244057940281
+  Std_train_score: 0.013037987552408984
+  Avg_test_score: 0.613479348664269
+  Std_test_score: 0.020027598465561722
+- rank: 3
+  params:
+    classifier__C: 10
+    classifier__kernel: linear
+  stable_score: 0.4848230567731323
+  Avg_train_score: 0.946907652986018
+  Std_train_score: 0.008786640178557813
+  Avg_test_score: 0.652298797458981
+  Std_test_score: 0.020171312922330202
+- rank: 4
+  params:
+    classifier__C: 1
+    classifier__kernel: linear
+  stable_score: 0.4097409948508354
+  Avg_train_score: 0.6285168190994025
+  Std_train_score: 0.009818049644234408
+  Avg_test_score: 0.4921683173289715
+  Std_test_score: 0.014253071592920535
+- rank: 5
+  params:
+    classifier__C: 5
+    classifier__kernel: rbf
+  stable_score: 0.37222779685163887
+  Avg_train_score: 0.9486342397332009
+  Std_train_score: 0.007929279045984072
+  Avg_test_score: 0.5760418841880526
+  Std_test_score: 0.017517909563839525
+- rank: 6
+  params:
+    classifier__C: 10
+    classifier__kernel: rbf
+  stable_score: 0.36622195531716056
+  Avg_train_score: 0.9526313151400629
+  Std_train_score: 0.006968052337128339
+  Avg_test_score: 0.5709189547459333
+  Std_test_score: 0.01384081923170797
+- rank: 7
+  params:
+    classifier__C: 2
+    classifier__kernel: rbf
+  stable_score: 0.3585361101958323
+  Avg_train_score: 0.900742627593436
+  Std_train_score: 0.013308643907135287
+  Avg_test_score: 0.550900349930863
+  Std_test_score: 0.017443100903744152
+- rank: 8
+  params:
+    classifier__C: 1
+    classifier__kernel: rbf
+  stable_score: 0.2554688227876116
+  Avg_train_score: 0.6640745742421121
+  Std_train_score: 0.010011983584410612
+  Avg_test_score: 0.3989974333448222
+  Std_test_score: 0.010990040108565583
+- rank: 9
+  params:
+    classifier__C: 0.5
+    classifier__kernel: linear
+  stable_score: 0.24406347145801788
+  Avg_train_score: 0.3615953387617023
+  Std_train_score: 0.011216407583880194
+  Avg_test_score: 0.2896028303603885
+  Std_test_score: 0.009543104701713701
+- rank: 10
+  params:
+    classifier__C: 0.5
+    classifier__kernel: rbf
+  stable_score: 0.11344704838303052
+  Avg_train_score: 0.27880432515437253
+  Std_train_score: 0.006551854209814478
+  Avg_test_score: 0.17504198717860567
+  Std_test_score: 0.009713769807691716
+KNN:
+- rank: 1
+  params:
+    classifier__n_neighbors: 10
+  stable_score: 0.18444892464430868
+  Avg_train_score: 0.37546800114512824
+  Std_train_score: 0.010249189740686221
+  Avg_test_score: 0.26476214373918266
+  Std_test_score: 0.024960290391901188
+- rank: 2
+  params:
+    classifier__n_neighbors: 7
+  stable_score: 0.1685746137485294
+  Avg_train_score: 0.4247707993940263
+  Std_train_score: 0.005668029646236762
+  Avg_test_score: 0.2700143593796095
+  Std_test_score: 0.02406152562387171
+- rank: 3
+  params:
+    classifier__n_neighbors: 5
+  stable_score: 0.1246671951888568
+  Avg_train_score: 0.4871217596154501
+  Std_train_score: 0.013308784067860563
+  Avg_test_score: 0.2710110423985911
+  Std_test_score: 0.03828848860130476
+- rank: 4
+  params:
+    classifier__n_neighbors: 3
+  stable_score: 0.10437077585521773
+  Avg_train_score: 0.5322646342304422
+  Std_train_score: 0.007197143959913555
+  Avg_test_score: 0.2586711599697507
+  Std_test_score: 0.017503646984187216
+Decision Tree:
+- rank: 1
+  params:
+    classifier__max_depth: 30
+    classifier__min_samples_split: 10
+  stable_score: 0.2712860154564933
+  Avg_train_score: 0.6789796767488333
+  Std_train_score: 0.021005025743064593
+  Avg_test_score: 0.4162568808730686
+  Std_test_score: 0.013609467478693033
+- rank: 2
+  params:
+    classifier__max_depth: 20
+    classifier__min_samples_split: 10
+  stable_score: 0.2676685704161761
+  Avg_train_score: 0.6003287412819546
+  Std_train_score: 0.024997202262273203
+  Avg_test_score: 0.3874277546644208
+  Std_test_score: 0.013308690939477815
+- rank: 3
+  params:
+    classifier__max_depth: 20
+    classifier__min_samples_split: 5
+  stable_score: 0.2655914722394174
+  Avg_train_score: 0.6531000730681189
+  Std_train_score: 0.016450760852308833
+  Avg_test_score: 0.40574326266281435
+  Std_test_score: 0.016473385220744645
+- rank: 4
+  params:
+    classifier__max_depth: 30
+    classifier__min_samples_split: 5
+  stable_score: 0.24715667447853906
+  Avg_train_score: 0.746441939747792
+  Std_train_score: 0.0147884562926695
+  Avg_test_score: 0.4274174642040138
+  Std_test_score: 0.02074855195358561
+- rank: 5
+  params:
+    classifier__max_depth: 20
+    classifier__min_samples_split: 2
+  stable_score: 0.23379308373247
+  Avg_train_score: 0.7195834259917354
+  Std_train_score: 0.016483642322964086
+  Avg_test_score: 0.407517196503537
+  Std_test_score: 0.017690998026967834
+- rank: 6
+  params:
+    classifier__max_depth: 10
+    classifier__min_samples_split: 10
+  stable_score: 0.21405783032797365
+  Avg_train_score: 0.30086481744781834
+  Std_train_score: 0.026432214210453976
+  Avg_test_score: 0.25484787085315774
+  Std_test_score: 0.017781567227853783
+- rank: 7
+  params:
+    classifier__max_depth: 30
+    classifier__min_samples_split: 2
+  stable_score: 0.2129115897457593
+  Avg_train_score: 0.8408304512515725
+  Std_train_score: 0.012997177481078915
+  Avg_test_score: 0.4359013132561958
+  Std_test_score: 0.02052515451274814
+- rank: 8
+  params:
+    classifier__max_depth: 10
+    classifier__min_samples_split: 2
+  stable_score: 0.20265347284870164
+  Avg_train_score: 0.31190729059384437
+  Std_train_score: 0.028099174537899306
+  Avg_test_score: 0.25164592710077605
+  Std_test_score: 0.01886177250554025
+- rank: 9
+  params:
+    classifier__max_depth: 10
+    classifier__min_samples_split: 5
+  stable_score: 0.20159811003102454
+  Avg_train_score: 0.30766306548906114
+  Std_train_score: 0.02808792956039868
+  Avg_test_score: 0.2504146165139231
+  Std_test_score: 0.020192281995329558
