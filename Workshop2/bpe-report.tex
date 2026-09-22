@@ -1,0 +1,81 @@
+\section{Exercise 2: Implementing the BPE tokenization algorithm}
+
+
+\subsection*{Goal}
+
+The goal of this lab was to implement the Byte Pair Encoding (BPE) algorithm from
+scratch, using only the Python standard library, and then to compare the result with
+the \texttt{sentencepiece} library. The corpus is the French Wikipedia page
+\emph{Grèce antique}, about 225{,}058 characters and 6{,}495 distinct words.
+
+\subsection*{What was implemented}
+
+\textbf{Preparation.} The text is cut into words with the regular expression
+\verb|\b[^\s]+\b|, and each word is counted with a \texttt{Counter}. Each word is then
+split into single characters, which gives the starting vocabulary: 106 distinct
+characters for this corpus.
+
+\textbf{The three functions of the algorithm.}
+\begin{itemize}
+  \item \texttt{compute\_pair\_freqs(splits, word\_freqs)} goes through every word and
+        counts each pair of successive tokens, weighted by the frequency of the word.
+  \item \texttt{most\_frequent(pair\_freqs)} returns the pair with the highest count.
+  \item \texttt{merge\_pair(a, b, splits)} rebuilds every word with the pair
+        \texttt{(a,b)} replaced by the single token \texttt{ab}. It scans each word with
+        an index and jumps forward by two positions after a merge, so that the second
+        token of the pair is not examined again.
+\end{itemize}
+
+\textbf{The \texttt{BPE} class} repeats these three steps until the vocabulary reaches
+the requested size. At each iteration it stores the merge in \texttt{merge\_rules}, adds
+the new token to the vocabulary, and updates the splits. The \texttt{tokenize} method
+applies the same rules, in the same order, to a new text. With a target size of 500, the
+algorithm learns 394 merge rules on top of the 106 initial characters. The first merges
+are the most frequent French patterns: \texttt{es}, \mk\texttt{d}, \mk\texttt{l},
+\texttt{nt}, \texttt{qu}, \texttt{re}, \texttt{on}, \mk\texttt{de}, \texttt{ent}.
+
+\subsection*{Detokenization}
+
+The first version of the tokenizer could not rebuild the original text, because the
+spaces were removed by the regular expression and the words were flattened into a single
+list. Undoing the merges does not help: a merged token is exactly the concatenation of
+its two parts, so the letters are already there; what is missing is the position of the
+word boundaries.
+
+The solution was to make the boundary part of the text itself. A marker \mk{} (the
+character \texttt{U+2581}, the one used by \texttt{sentencepiece}) is added at the
+beginning of every word, both during training and during tokenization. BPE then learns
+it like any other character, and produces tokens such as \mk\texttt{en} or
+\mk\texttt{Grèce}. Detokenization becomes a single line: join the tokens and replace the
+marker by a space. The sentence \emph{cultures grecques développée en Grèce} is
+recovered exactly.
+
+\subsection*{Comparison with sentencepiece}
+
+Both vocabularies have 500 tokens and share 456 of them, and their first 20 merges are
+identical, which confirms that the implementation is correct. The remaining differences
+come from the preprocessing, not from the algorithm:
+
+\begin{itemize}
+  \item \texttt{sentencepiece} reserves three special tokens
+        (\texttt{<unk>}, \texttt{<s>}, \texttt{</s>});
+  \item it keeps only the characters covering $99.95\%$ of the text (83 instead of 106),
+        which leaves room for 414 merges instead of 394;
+  \item our regular expression deletes the punctuation (2{,}666 commas, 1{,}510 full
+        stops, 829 parentheses), so it cannot be learned nor restored;
+  \item it never merges a letter with a punctuation character, so it learns
+        \texttt{époque} alone where our version learns \mk\texttt{l'époque}.
+\end{itemize}
+
+To obtain a similar vocabulary, the punctuation should be kept as separate chunks (for
+example with \verb!\w+|[^\w\s]+!), rare characters should be replaced by \texttt{<unk>},
+and the three special tokens should be added to the vocabulary.
+
+\subsection*{Results}
+
+The final tokenizer uses 2.52 tokens per word on average (2.52 characters per token).
+Tokenizing a word of the corpus gives exactly the split learned during training, every
+token produced belongs to the vocabulary, and the detokenization returns the original
+text for both known and unknown words.
+
+\end{document}
