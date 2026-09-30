@@ -43,3 +43,5 @@ outputs/results/*
 logs/
 
 Workshop3/TP_ISD2020
+Workshop3/models/
+Workshop3/data/
