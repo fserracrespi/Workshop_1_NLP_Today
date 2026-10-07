@@ -1,0 +1,253 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+
+% Draft marker for the sections still to be written.
+% Delete this macro (and every \TODO call) before handing the report in.
+\newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO:} #1\textbf{]}}}
+
+\title{Word Embeddings and Named Entity Recognition\\
+       on the QUAERO French Corpora}
+\author{Alexandre Costa \and Francesc Serra}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We build and compare word embeddings on two French corpora of very different size and domain,
+and we evaluate them on medical named entity recognition (NER) together with a pretrained
+Transformer. Three embedding approaches (word2vec CBOW, word2vec skip-gram and fastText CBOW)
+are trained on a small medical corpus (QUAERO\_FrenchMed) and a large non-medical one
+(QUAERO\_FrenchPress), compared intrinsically by cosine similarity, and then used to
+initialise the embedding layer of a CNN and a BiLSTM token classifier. A fine-tuned
+CamemBERT model provides the Transformer point of comparison. The Transformer reaches an
+entity-level $F_1$ of $0.629$ on EMEA and $0.577$ on MEDLINE, against $0.433$ and $0.326$
+for the best word-level model.
+\end{abstract}
+
+\section{Objectives}
+\label{sec:objectives}
+
+\TODO{Summarise the two lab sessions: (i) building and comparing embedding approaches on the
+two corpora, (ii) evaluating them on the NER task against a Transformer.}
+
+%% ======================================================================
+\section{Session 1 --- Word embeddings}
+\label{sec:tp1}
+
+\subsection{Corpora}
+\label{sec:corpora}
+
+\TODO{Describe the two \texttt{.ospl} corpora and give their sizes (sentences, tokens, word
+types). Point out that the press corpus is about $24\times$ larger than the medical one.}
+
+\subsection{Training setup}
+\label{sec:tp1-setup}
+
+\TODO{Report the hyper-parameters required by the assignment ($\mathrm{dim}=100$,
+$\mathrm{min\_count}=1$), the window size, and the number of epochs actually used. Explain why
+the library default of 5 epochs had to be raised to 30.}
+
+\subsection{Semantic similarity}
+\label{sec:similarity}
+
+\TODO{For each candidate word (\emph{patient}, \emph{traitement}, \emph{maladie},
+\emph{solution}, \emph{jaune}), give the 10 nearest neighbours by cosine similarity, in the two
+required comparisons: same corpus / different approaches, and same approach / different
+corpora.}
+
+\subsection{Discussion}
+\label{sec:tp1-discussion}
+
+\TODO{Interpret the tables: effect of the approach (CBOW vs skip-gram vs fastText) and effect
+of the data (type and quantity).}
+
+%% ======================================================================
+\section{Session 2 --- Named entity recognition}
+\label{sec:tp2}
+
+\subsection{Dataset}
+\label{sec:ner-data}
+
+The annotated data is the QUAERO\_FrenchMed corpus in CoNLL format: five whitespace-separated
+columns per line (token index, token, two unused columns, NER tag), with sentences separated by
+an empty line. Tags follow the \texttt{I-TYPE} convention, with \texttt{B-TYPE} marking the
+first token of an entity that immediately follows another, and \texttt{O} for tokens outside
+any entity. Ten entity types occur (ANAT, CHEM, DEVI, DISO, GEOG, LIVB, OBJC, PHEN, PHYS,
+PROC), giving 21 distinct tags. Two sub-corpora are provided with their own train/dev/test
+splits: EMEA (drug leaflets) and MEDLINE (scientific article titles).
+
+\TODO{Add a table of split sizes (sentences and entities per split) and note the class
+imbalance: \texttt{O} covers about 79\% of tokens.}
+
+\subsection{Adapting the provided scripts}
+\label{sec:adaptation}
+
+All three provided scripts perform \emph{sentence} classification and had to be adapted to
+\emph{token} classification.
+
+\TODO{Describe the CNN and LSTM adaptations: CoNLL loading, removing the pooling / last-time-step
+reduction so that one label is predicted per token, the cross-entropy objective with
+\texttt{ignore\_index} on padding, and initialising the embedding layer from the TP1 vectors.}
+
+For \texttt{transformers\_classification.py} the changes were the following.
+\texttt{AutoModelForSequenceClassification} was replaced by
+\texttt{AutoModelForTokenClassification}, as required. Because BERT works on sub-word units,
+the labels no longer align with the input words: the tokenizer is called with
+\texttt{is\_split\_into\_words=True} and each word's tag is placed on its \emph{first}
+sub-word, while continuation sub-words and the special tokens receive the label $-100$, which
+the model excludes from the loss. For example \emph{Prialt} is split into
+\texttt{\_Pri}/\texttt{al}/\texttt{t} and only the first piece carries \texttt{B-CHEM}. At
+evaluation time the $-100$ positions are removed again, which recovers exactly one prediction
+per original word, as \texttt{seqeval} requires. The objective function itself did not have to
+be written: the token-classification head applies cross-entropy with
+\texttt{ignore\_index}$=-100$ internally. Finally, the script's \texttt{datasets}-based CSV
+preprocessing was replaced by a small \texttt{torch} \texttt{Dataset} plus
+\texttt{DataCollatorForTokenClassification}, which pads each batch and pads the labels with
+$-100$.
+
+Two API names in the provided script are deprecated in \texttt{transformers}~4.57 and raise an
+error: \texttt{TrainingArguments(evaluation\_strategy=...)} is now \texttt{eval\_strategy}, and
+\texttt{Trainer(tokenizer=...)} is now \texttt{processing\_class}.
+
+\subsection{Experimental setup}
+\label{sec:ner-setup}
+
+All models are evaluated with \texttt{seqeval} at the entity level, which requires both the
+span and the type of an entity to be predicted exactly. We report precision, recall and $F_1$.
+
+\TODO{Give the CNN and LSTM hyper-parameters (embedding dimension 100, filters/kernels, hidden
+size, batch size, learning rate, early stopping).}
+
+The Transformer is \texttt{camembert-base}, fine-tuned with a maximum sequence length of 128, a
+batch size of 8 and a learning rate of $3\times10^{-5}$. Training runs for at most 20 epochs
+with early stopping on dev $F_1$ (patience~3), and the best epoch is restored before testing.
+The number of epochs matters a great deal here and is discussed in
+Section~\ref{sec:q3}.
+
+\subsection{Results}
+\label{sec:ner-results}
+
+Table~\ref{tab:results} collects the best configuration of each model on the test sets.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llccc}
+\toprule
+Dataset & Model & Precision & Recall & $F_1$ \\
+\midrule
+EMEA    & CNN (press skip-gram, fine-tuned)   & 0.4623 & 0.4072 & 0.4330 \\
+EMEA    & BiLSTM (press fastText, frozen)     & 0.4884 & 0.3798 & 0.4273 \\
+EMEA    & \textbf{CamemBERT (fine-tuned)}     & \textbf{0.6330} & \textbf{0.6257} & \textbf{0.6293} \\
+\midrule
+MEDLINE & CNN (press CBOW, fine-tuned)        & ---    & ---    & 0.3244 \\
+MEDLINE & BiLSTM (med fastText, fine-tuned)   & ---    & ---    & 0.3260 \\
+MEDLINE & \textbf{CamemBERT (fine-tuned)}     & \textbf{0.5474} & \textbf{0.6110} & \textbf{0.5774} \\
+\bottomrule
+\end{tabular}
+\caption{Entity-level test results (\texttt{seqeval}). Random-embedding baselines reach
+$F_1=0.2648$ (CNN) and $0.2227$ (BiLSTM) on EMEA.}
+\label{tab:results}
+\end{table}
+
+\TODO{Add the per-entity breakdown for the best model of each dataset, and the embedding
+vocabulary coverage table.}
+
+%% ======================================================================
+\section{Answers to the questions}
+\label{sec:questions}
+
+\subsection{Which model provides the best performance on each dataset?}
+\label{sec:q1}
+
+The Transformer, on both datasets and by a wide margin: $F_1=0.629$ against $0.433$ on EMEA,
+and $0.577$ against $0.326$ on MEDLINE (Table~\ref{tab:results}). The gap between the
+Transformer and the word-level models is larger than any difference \emph{within} the
+word-level models, whatever embeddings the latter are given.
+
+Two secondary observations follow from the same table. The CNN and the BiLSTM are
+indistinguishable from each other on both datasets, so the choice of word-level architecture
+matters far less than the choice of representation. And every model scores lower on MEDLINE
+than on EMEA, which is consistent with MEDLINE being made of scientific article titles: they
+are shorter, denser in entities and lexically more varied than drug-leaflet sentences.
+
+\TODO{Confirm the MEDLINE CNN/BiLSTM figures against the notebook that produced them and add
+the missing precision/recall values in Table~\ref{tab:results}.}
+
+\subsection{Differences between the embeddings learned on the two corpora}
+\label{sec:q2}
+
+\TODO{Answer from Section~\ref{sec:similarity}: the two corpora learn different senses of the
+same word (the \emph{jaune} example), and the press corpus produces the better NER model
+despite being out of domain because it is far larger.}
+
+\subsection{Comparison with a Transformer model}
+\label{sec:q3}
+
+CamemBERT outperforms the best word-level model by $+0.196$ $F_1$ on EMEA ($0.6293$ against
+$0.4330$) and by $+0.251$ on MEDLINE ($0.5774$ against $0.3260$), while using none of the
+embeddings trained in Session~1. Three properties account for the difference.
+
+\begin{enumerate}
+  \item \textbf{Sub-word tokenisation.} There is no out-of-vocabulary case: any unseen word is
+    decomposed into known pieces. The word-level models, by contrast, left between 14\% and
+    42\% of their vocabulary on random vectors, depending on the source corpus.
+  \item \textbf{Scale of pretraining.} CamemBERT is pretrained on billions of French tokens,
+    against the $52$K and $1.25$M tokens of the two lab corpora. This is the same effect that
+    made the press embeddings beat the medical ones, several orders of magnitude further along.
+  \item \textbf{Contextual representations.} Each occurrence of a word receives its own vector,
+    so \emph{jaune} in \emph{fièvre jaune} and in \emph{maillot jaune} are no longer forced to
+    share a single representation. This removes precisely the limitation identified in
+    Section~\ref{sec:q2}.
+\end{enumerate}
+
+Two caveats qualify this comparison. First, the Transformer only wins once it is trained to
+convergence. A first run using the provided script's default of 5 epochs scored $F_1=0.4263$ on
+EMEA --- statistically indistinguishable from the CNN --- because dev $F_1$ was still rising
+steeply when training stopped: it went $0.000$, $0.000$, $0.365$, $0.471$, $0.496$ over the
+five epochs and only peaked at $0.736$ on epoch~14. With 706 training sentences and a batch
+size of 8, five epochs amount to just 445 optimiser steps, which is not enough for a randomly
+initialised classification head over 21 labels. Comparing architectures at unequal training
+budgets measures the budget rather than the architecture.
+
+Second, the Transformer does not remove the dataset's real limitation. The rare entity types
+remain unlearnable for it as well: PHEN (19 training entities) scores $0.000$, OBJC $0.133$ and
+DEVI $0.171$ --- the same types on which the CNN and the BiLSTM also fail. Conversely, the
+well-represented types are handled well (LIVB $0.827$, CHEM $0.725$). With 706 training
+sentences spread over 10 entity types, the quantity of annotated data --- not the architecture
+and not the embeddings --- is what ultimately caps every model considered here.
+
+%% ======================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+\TODO{Wrap up: representation quality dominates architecture choice; corpus size dominates
+domain match for static embeddings; a pretrained Transformer supersedes both, but the amount of
+annotated data remains the binding constraint.}
+
+%% ======================================================================
+\appendix
+\section{Code}
+\label{sec:code}
+
+\begin{tabular}{ll}
+\toprule
+File & Content \\
+\midrule
+\texttt{main.ipynb}            & Session 1: embedding training and semantic similarity \\
+\texttt{scripts/cnn.ipynb}     & Session 2: CNN token classifier \\
+\texttt{scripts/lstm.ipynb}    & Session 2: BiLSTM token classifier \\
+\texttt{scripts/transformer.ipynb} & Session 2: CamemBERT token classifier \\
+\bottomrule
+\end{tabular}
+
+\end{document}
